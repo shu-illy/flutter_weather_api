@@ -75,11 +75,10 @@ class Weather {
             temperature: weather['temp'].toInt(),
             icon: weather['weather'][0]['icon']);
       }).toList();
-      // print('時刻:');
-      // print(hourlyWeather[0].time);
-      // print(hourlyWeather[1].time);
-      // print(hourlyWeather[1].icon);
-      return [];
+      if (hourlyWeather.length > 24) {
+        hourlyWeather = hourlyWeather.sublist(0, 24);
+      }
+      return hourlyWeather;
     } catch (e) {
       print(e);
       return [];
