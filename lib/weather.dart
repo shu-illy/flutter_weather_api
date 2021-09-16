@@ -24,7 +24,10 @@ class Weather {
     required this.time,
     this.rainyPercent = 10,
   });
-
+  static String publicParameter =
+      'appid=6fbe4a724b915b0da6231a2b9ccc0aa0&lang=ja&units=metric';
+  // static double lon = 136.9763;
+  // static double lat = 35.0878;
   static Future<Weather> getCurrentWeather(String zipCode) async {
     late String _zipCode;
     if (zipCode.contains('-')) {
@@ -34,7 +37,7 @@ class Weather {
     }
     print(_zipCode);
     String url =
-        'https://api.openweathermap.org/data/2.5/weather?zip=$_zipCode,JP&appid=6fbe4a724b915b0da6231a2b9ccc0aa0&lang=ja&units=metric';
+        'https://api.openweathermap.org/data/2.5/weather?zip=$_zipCode,JP&${publicParameter}';
     try {
       var result = await get(Uri.parse(url));
       Map<String, dynamic> data = jsonDecode(result.body);
@@ -44,12 +47,42 @@ class Weather {
         temperature: data['main']['temp'].toInt(),
         temperatureMax: data['main']['temp_max'].toInt(),
         temperatureMin: data['main']['temp_min'].toInt(),
+        longitude: data['coord']['lon'],
+        latitude: data['coord']['lat'],
         time: DateTime.now(),
       );
       return currentWeather;
     } catch (e) {
       print(e);
       throw '天気を取得できませんでした';
+    }
+  }
+
+  static Future<List<Weather>> getHourlyWeather(
+      {required double lon, required double lat}) async {
+    String url =
+        'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&${publicParameter}&exclude=minutely';
+    try {
+      var result = await get(Uri.parse(url));
+      Map<String, dynamic> data = jsonDecode(result.body);
+      // print(data);
+      List<dynamic> hourlyWeatherData = data['hourly'];
+      // print('hourly data:');
+      // print(hourlyWeatherData);
+      List<Weather> hourlyWeather = hourlyWeatherData.map((weather) {
+        return Weather(
+            time: DateTime.fromMillisecondsSinceEpoch(weather['dt'] * 1000),
+            temperature: weather['temp'].toInt(),
+            icon: weather['weather'][0]['icon']);
+      }).toList();
+      // print('時刻:');
+      // print(hourlyWeather[0].time);
+      // print(hourlyWeather[1].time);
+      // print(hourlyWeather[1].icon);
+      return [];
+    } catch (e) {
+      print(e);
+      return [];
     }
   }
 }

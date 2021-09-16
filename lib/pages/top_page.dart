@@ -145,6 +145,9 @@ class _TopPageState extends State<TopPage> {
                       if (response.containsKey('address')) {
                         address = response['address']!;
                         currentWeather = await Weather.getCurrentWeather(value);
+                        await Weather.getHourlyWeather(
+                            lon: currentWeather.longitude,
+                            lat: currentWeather.latitude);
                       }
                       setState(() {});
                     },
