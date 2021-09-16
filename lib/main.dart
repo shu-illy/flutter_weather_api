@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// TODO: 1時間ごとの天気を表示
 // TODO: 日毎の天気を表示
 // TODO: 郵便番号検索窓のUIを作成
 // TODO: 郵便番号から住所を取得

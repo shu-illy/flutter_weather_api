@@ -10,14 +10,14 @@ class Weather {
   late int rainyPercent; //降水確率
 
   Weather({
-    required this.temperature,
-    required this.temperatureMax,
-    required this.temperatureMin,
-    required this.weatherDescription,
-    required this.longitude,
-    required this.latitude,
-    required this.icon,
+    this.temperature = 15,
+    this.temperatureMax = 20,
+    this.temperatureMin = 10,
+    this.weatherDescription = '',
+    this.longitude = 135,
+    this.latitude = 50,
+    this.icon = '',
     required this.time,
-    required this.rainyPercent,
+    this.rainyPercent = 10,
   });
 }
