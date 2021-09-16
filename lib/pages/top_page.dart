@@ -130,6 +130,15 @@ class _TopPageState extends State<TopPage> {
       body: SafeArea(
         child: Column(
           children: [
+            Container(
+                width: 200,
+                child: TextField(
+                    onSubmitted: (value) {
+                      print(value);
+                      // 郵便番号から住所を検索
+                    },
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(hintText: '郵便番号を入力'))),
             SizedBox(height: 50),
             Text('大阪市', style: TextStyle(fontSize: 25)),
             Text(currentWeather.weatherDescription),

@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-// TODO: 郵便番号検索窓のUIを作成
 // TODO: 郵便番号から住所を取得
 // TODO: 郵便番号検索APIをdartで実施
 // TODO: 検索時に郵便番号から住所を取得・表示
