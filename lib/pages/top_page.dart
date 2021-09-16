@@ -17,6 +17,7 @@ class _TopPageState extends State<TopPage> {
     weatherDescription: '晴れ',
     time: DateTime.now(),
   );
+  String address = 'ー';
   List<Weather> hourlyWeather = [
     Weather(
       temperature: 15,
@@ -137,14 +138,14 @@ class _TopPageState extends State<TopPage> {
                 child: TextField(
                     onSubmitted: (value) async {
                       // 郵便番号から住所を検索
-                      late String address;
                       address = await ZipCode.searchAddressFromZipCode(value);
                       print(address);
+                      setState(() {});
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(hintText: '郵便番号を入力'))),
             SizedBox(height: 50),
-            Text('大阪市', style: TextStyle(fontSize: 25)),
+            Text(address, style: TextStyle(fontSize: 25)),
             Text(currentWeather.weatherDescription),
             Text('${currentWeather.temperature}℃',
                 style: TextStyle(fontSize: 80)),
