@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_weather_api/pages/top_page.dart';
 
 void main() {
@@ -8,18 +9,27 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    const locale = Locale("ja", "JP");
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      locale: locale,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        locale,
+      ],
       home: TopPage(),
     );
   }
 }
 
-// TODO: 現在の天気情報を表示
 // TODO: 1時間ごとの天気を表示
 // TODO: 日毎の天気を表示
 // TODO: 郵便番号検索窓のUIを作成
