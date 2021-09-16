@@ -25,7 +25,7 @@ class Weather {
     this.rainyPercent = 10,
   });
 
-  static Future<dynamic> getCurrentWeather(String zipCode) async {
+  static Future<Weather> getCurrentWeather(String zipCode) async {
     late String _zipCode;
     if (zipCode.contains('-')) {
       _zipCode = zipCode;
@@ -41,15 +41,15 @@ class Weather {
       print(data);
       Weather currentWeather = Weather(
         weatherDescription: data['weather'][0]['description'],
-        temperature: data['main']['temp'],
-        temperatureMax: data['main']['temp_max'],
-        temperatureMin: data['main']['temp_min'],
+        temperature: data['main']['temp'].toInt(),
+        temperatureMax: data['main']['temp_max'].toInt(),
+        temperatureMin: data['main']['temp_min'].toInt(),
         time: DateTime.now(),
       );
       return currentWeather;
     } catch (e) {
       print(e);
-      return null;
+      throw '天気を取得できませんでした';
     }
   }
 }

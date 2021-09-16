@@ -11,10 +11,10 @@ class TopPage extends StatefulWidget {
 
 class _TopPageState extends State<TopPage> {
   Weather currentWeather = Weather(
-    temperature: 15,
-    temperatureMax: 20,
-    temperatureMin: 10,
-    weatherDescription: '晴れ',
+    temperature: 0,
+    temperatureMax: 0,
+    temperatureMin: 0,
+    weatherDescription: 'ー',
     time: DateTime.now(),
   );
   String address = 'ー';
@@ -141,10 +141,10 @@ class _TopPageState extends State<TopPage> {
                       // 郵便番号から住所を検索
                       Map<String, String> response =
                           await ZipCode.searchAddressFromZipCode(value);
-                      await Weather.getCurrentWeather(value);
                       errorMessage = response['message'] ?? '';
                       if (response.containsKey('address')) {
                         address = response['address']!;
+                        currentWeather = await Weather.getCurrentWeather(value);
                       }
                       setState(() {});
                     },
