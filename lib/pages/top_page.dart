@@ -18,6 +18,7 @@ class _TopPageState extends State<TopPage> {
     time: DateTime.now(),
   );
   String address = 'ー';
+  String errorMessage = '';
   List<Weather> hourlyWeather = [
     Weather(
       temperature: 15,
@@ -138,12 +139,20 @@ class _TopPageState extends State<TopPage> {
                 child: TextField(
                     onSubmitted: (value) async {
                       // 郵便番号から住所を検索
-                      address = await ZipCode.searchAddressFromZipCode(value);
-                      print(address);
+                      Map<String, String> response =
+                          await ZipCode.searchAddressFromZipCode(value);
+                      errorMessage = response['message'] ?? '';
+                      if (response.containsKey('address')) {
+                        address = response['address']!;
+                      }
                       setState(() {});
                     },
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(hintText: '郵便番号を入力'))),
+            Text(
+              errorMessage,
+              style: TextStyle(color: Colors.red),
+            ),
             SizedBox(height: 50),
             Text(address, style: TextStyle(fontSize: 25)),
             Text(currentWeather.weatherDescription),
