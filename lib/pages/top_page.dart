@@ -141,6 +141,7 @@ class _TopPageState extends State<TopPage> {
                       // 郵便番号から住所を検索
                       Map<String, String> response =
                           await ZipCode.searchAddressFromZipCode(value);
+                      await Weather.getCurrentWeather(value);
                       errorMessage = response['message'] ?? '';
                       if (response.containsKey('address')) {
                         address = response['address']!;
